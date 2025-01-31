@@ -27,6 +27,7 @@ jobs:
       - name: run tests
         run: go test -cover ./...
 
+
   style:
     name: Style
     runs-on: ubuntu-latest
@@ -52,3 +53,9 @@ jobs:
             git add .
             git diff --quiet && git diff --staged --quiet || (git commit -m "auto: fix formatting" && git push)
           )
+
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Run staticcheck
+        run: staticcheck ./...
