@@ -19,18 +19,16 @@ func respondWithError(w http.ResponseWriter, code int, msg string) {
 }
 
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	dat, err := json.Marshal(payload)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-	_, err = w.Write(dat)
-	if err != nil {
-		log.Printf("Error writing response: %v", err)
-		// Can't write to response at this point as headers are already sent
-	}
-	w.WriteHeader(code)
-	w.Write(dat)
+    dat, err := json.Marshal(payload)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(code)
+    _, err = w.Write(dat)
+    if err != nil {
+        log.Printf("Error writing response: %v", err)
+        // Can't write to response at this point as headers are already sent
+    }
 }
