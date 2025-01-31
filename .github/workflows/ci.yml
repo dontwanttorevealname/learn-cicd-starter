@@ -45,8 +45,10 @@ jobs:
 
       - name: Fix formatting
         run: |
-          gofmt -w .
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git add .
-          git diff --quiet && git diff --staged --quiet || (git commit -m "auto: fix formatting" && git push)
+          test -z $(gofmt -l .) || (
+            gofmt -w .
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            git add .
+            git diff --quiet && git diff --staged --quiet || (git commit -m "auto: fix formatting" && git push)
+          )
