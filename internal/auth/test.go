@@ -8,10 +8,10 @@ import (
 
 func TestGetAPIKey(t *testing.T) {
 	tests := []struct {
-		name        string
-		headers     http.Header
-		wantAPIKey  string
-		wantErr     error
+		name       string
+		headers    http.Header
+		wantAPIKey string
+		wantErr    error
 	}{
 		{
 			name: "valid api key",
@@ -22,10 +22,10 @@ func TestGetAPIKey(t *testing.T) {
 			wantErr:    nil,
 		},
 		{
-			name:        "missing authorization header",
-			headers:     http.Header{},
-			wantAPIKey:  "",
-			wantErr:     ErrNoAuthHeaderIncluded,
+			name:       "missing authorization header",
+			headers:    http.Header{},
+			wantAPIKey: "",
+			wantErr:    ErrNoAuthHeaderIncluded,
 		},
 		{
 			name: "malformed header - wrong prefix",
@@ -64,7 +64,7 @@ func TestGetAPIKey(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gotAPIKey, gotErr := GetAPIKey(tt.headers)
-			
+
 			if tt.wantErr != nil && gotErr == nil {
 				t.Errorf("GetAPIKey() expected error %v, got nil", tt.wantErr)
 				return
@@ -77,7 +77,7 @@ func TestGetAPIKey(t *testing.T) {
 				t.Errorf("GetAPIKey() expected error %v, got %v", tt.wantErr, gotErr)
 				return
 			}
-			
+
 			if gotAPIKey != tt.wantAPIKey {
 				t.Errorf("GetAPIKey() = %v, want %v", gotAPIKey, tt.wantAPIKey)
 			}
